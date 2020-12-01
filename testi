@@ -4,9 +4,9 @@
 #                                              #
 # -------------------------------------------- #
 launched ./a.out
-$$$ exec p1 : [./a.out]
+$$$ exec p1 : [resources/players/abanlin.filler]
 launched ./a.out
-$$$ exec p2 : [./a.out]
+$$$ exec p2 : [./eprusako.filler]
 Plateau 15 17:
     01234567890123456
 000 .................
