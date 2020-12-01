@@ -6,11 +6,11 @@
 #    By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/15 11:04:15 by eprusako          #+#    #+#              #
-#    Updated: 2020/12/01 13:42:56 by eprusako         ###   ########.fr        #
+#    Updated: 2020/12/01 16:04:26 by eprusako         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = filler
+NAME = eprusako.filler
 
 LIBFT = ./libft/
 DIR_SRC = src
