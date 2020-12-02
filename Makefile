@@ -6,7 +6,7 @@
 #    By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/15 11:04:15 by eprusako          #+#    #+#              #
-#    Updated: 2020/12/01 16:04:26 by eprusako         ###   ########.fr        #
+#    Updated: 2020/12/01 23:07:36 by eprusako         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ all: $(NAME)
 $(NAME):
 	@echo $(YELLOW)Compiling FILLER...$(NOCOLOR)
 	@make -C $(LIBFT)
-	@gcc -Wall -Wextra -Werror -c $(SRCS) $(HEADER)
+	@gcc -g -Wall -Wextra -Werror -c $(SRCS) $(HEADER)
 	@gcc -g $(HEADER) $(OBJS) libft/libft.a -o $(NAME)
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/01 14:06:36 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/02 22:17:52 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,32 @@
 
 # include "../libft/libft.h"
 
+# define X		"Xx"
+# define O		"Oo"
 
 typedef	struct		s_fil
 {
 	int				player;
 	int				enemy;
-
+	char			**map;
+	char			**t;
+	int				t_x;
+	int				t_y;
+	int				end;
+	int				x;
+	int				y;
+	int				p_x;
+	int				p_y;
+	int				e_x;
+	int				e_y;
+	int				i;
 }					t_fil;
 
 /*
 ** ------ FILLER.C ------
 */
 
+void	print_map(int j, t_fil *data);
+void         solve_it(int i, int j, int fill, t_fil *data);
 
 #endif
