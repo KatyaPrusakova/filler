@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/03 21:01:53 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/03 21:28:38 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int         is_valid(int i, int j, char c, t_fil *data)
 int          put_numbers(int i, int j, char r, t_fil *data)
 {
 //    printf("input is %c j %d  i %d\n", data->map[j][i], j, i);
-    if (ft_isdigit(data->map[j][i]))
-        return (0);
+    //if (ft_isdigit(data->map[j][i]))
+    //    return (0);
     if (is_valid(i, j, data->map[j][i], data))
     {
         data->map[j][i] = r;
@@ -224,44 +224,87 @@ int         full_fill_it(int i, int j, char r, t_fil *data)
 {
     int tj;
     int ti;
+    char c;
+
     
     tj = j;
     ti = i;
+    j = tj;
+    i = ti;
+    c = r;
     while (i < data->x)
     {
-        if (fill_it(i + 1, j, r, data))
+        if (fill_it(i, j, r, data))
            r++;
         i++;
     }
-    tj = j;
-    ti = i;
-    if(fill_it(i, j + 1, r, data))
-        return (1);
-    tj = j;
-    ti = i;
-    if(fill_it(i - 1, j, r, data))
-        return (1);
-    tj = j;
-    ti = i;
-    if(fill_it(i, j - 1, r, data))
-        return (1);
-    tj = j;
-    ti = i;
-    if(fill_it(i - 1, j - 1, r, data))
-        return (1);
-    tj = j;
-    ti = i;  
-    if(fill_it(i + 1, j + 1, r, data))
-        return (1);
-    tj = j;
-    ti = i;
-    if(fill_it(i + 1, j - 1, r, data))
-        return (1);
-    tj = j;
-    ti = i; 
-    if(fill_it(i - 1, j + 1, r, data))
-        return (1);
-//    full_fill_it(data->e_x, data->e_y, raz + 1, data);
+    j = tj;
+    i = ti;
+    r = c;
+    while (j < data->y)
+    {
+        if(fill_it(i, j, r, data))
+            r++;
+        j++;
+    }
+    j = tj;
+    i = ti;
+    r = c;
+    while (i < data->x && j < data->y)
+    {
+        if (fill_it(i, j, r, data))
+           r++;
+        i++;
+        j++;
+    }
+    j = tj;
+    i = ti;
+    r = c;
+    while (i >= 0 && j >= 0)
+    {
+        if (fill_it(i, j, r, data))
+           r++;
+        i--;
+        j--;
+    }
+    j = tj;
+    i = ti;
+    r = c;
+    while (i >= 0)
+    {
+        if (fill_it(i, j, r, data))
+           r++;
+        i--;
+    }
+    j = tj;
+    i = ti;
+    r = c;
+    while (j >= 0)
+    {
+        if (fill_it(i, j, r, data))
+           r++;
+        j--;
+    }
+    j = tj;
+    i = ti;
+    r = c;
+    while (i < data->x && j >= 0)
+    {
+        if (fill_it(i, j, r, data))
+           r++;
+        i++;
+        j--;
+    }
+    j = tj;
+    i = ti;
+    r = c;
+    while (j < data->y && i >= 0)
+    {
+        if (fill_it(i, j, r, data))
+           r++;
+        j++;
+        i--;
+    }
     return (0);
 }
 
@@ -287,6 +330,8 @@ int        find_on_map_player(int j, int i, t_fil *data)
             {
                 data->e_x = i;
                 data->e_y = j;
+                 
+                full_fill_it(data->e_x, data->e_y, data->i + '0', data);
                 
                 // fill_it(i - 1, j, data);
                 //data->i = 0;
@@ -294,13 +339,6 @@ int        find_on_map_player(int j, int i, t_fil *data)
             i++;
         }
         j++;
-    }
-    i = 0;
-    j = 0;
-    while (data->i < data->y)
-    {
-        full_fill_it(data->e_x, data->e_y, data->i + '0', data);
-        data->i++;
     }
     return (1);
 }
