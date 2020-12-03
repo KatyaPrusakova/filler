@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/03 01:02:10 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/03 20:25:13 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,92 +82,95 @@ int         is_valid(int i, int j, char c, t_fil *data)
 }
 
 // from enemy plus one everytime its not end off map 
-
-int         fill_it(int i, int j, t_fil *data)
+int          put_numbers(int i, int j, char r, t_fil *data)
 {
-    int    temp;
-    int    temp2;
-
-    temp = j - 1;
-    while (temp >= 0)
+    printf("input is %c j %d  i %d\n", data->map[j][i], j, i);
+    if (ft_isdigit(data->map[j][i]))
+        return (0);
+    if (is_valid(i, j, data->map[j][i], data))
     {
-        if (is_valid(i, temp, data->map[temp][i], data))
-        {
-            data->map[temp][i] = data->i + '0';
-            solve_it(i, temp, data->i, data);
-        }
-        temp--;
-    }
-
-    temp = i - 1;
-    while (temp >= 0)
-    {
-        if (is_valid(temp, j, data->map[j][temp], data))
-        {
-            data->map[j][temp] = data->i + '0';
-            solve_it(temp, j, data->i, data);
-        }
-        temp--;
-    }   
-    temp = i + 1;
-    temp2 = j + 1;
-    while (temp2 < data->y && temp < data->x)
-    {
-        if (is_valid(temp, temp2, data->map[temp2][temp], data))
-        {
-            data->map[temp2][temp] = data->i + '0';
-            solve_it(temp, temp2, data->i, data);
-        }
-            temp++;
-            temp2++;
-    }
-    temp = i - 1;
-    temp2 = j - 1;
-    while (temp2 >= 0 && temp >= 0)
-    {
-        if (is_valid(temp, temp2, data->map[temp2][temp], data))
-        {
-            data->map[temp2][temp] = data->i + '0';
-            solve_it(temp, temp2, data->i, data);
-        }
-        temp--;
-        temp2--;
-    }
-    temp = j + 1;
-    while (temp < data->y)
-    {
-        if (is_valid(i, temp, data->map[temp][i], data))
-        {
-            data->map[temp][i] = temp + '0';
-        }
-        temp++;
-    }
-    temp = i + 1;
-    temp2 = j - 1;
-    while (temp < data->x && temp2 >= 0)
-    {
-        if (is_valid(temp, temp2, data->map[temp2][temp], data))
-        {
-            data->map[temp2][temp] = temp + '0';
-        }
-        temp++;
-        temp2--;
-    }
-    temp = i - 1;
-    temp2 = j + 1;
-    while (temp2 < data->x && temp >= 0)
-    {
-        if (is_valid(temp, temp2, data->map[temp2][temp], data))
-        {
-            data->map[temp2][temp] = temp + '0';
-        }
-        temp--;
-        temp2++;
+        solve_it(i, j, r, data);
+        return (1);
     }
     return (0);
 }
 
-void         solve_it(int i, int j, int fill, t_fil *data)
+int          fill_it(int i, int j, char r, t_fil *data)
+{
+    
+    if (put_numbers(i, j, r, data))
+    {
+        return (1);
+    }
+    
+    // while (temp2 < data->y)
+    // {
+    //     if (put_numbers(temp, temp2, data))
+    //     {
+    //         data->i++;
+    //     }
+    //     temp2++;
+    // }
+    // data->i = 0;
+    // temp = i;
+    // temp2 = j;
+    // while (temp2 < data->y && temp < data->x)
+    // {
+    //     if (put_numbers(temp, temp2, data))
+    //     {
+    //         data->i++;
+    //     }
+    //         temp++;
+    //         temp2++;
+    // }
+//     temp = i - 1;
+//     temp2 = j - 1;
+//     while (temp2 >= 0 && temp >= 0)
+//     {
+//         if (is_valid(temp, temp2, data->map[temp2][temp], data))
+//         {
+//             data->map[temp2][temp] = data->i + '0';
+//             solve_it(temp, temp2, data->i, data);
+//         }
+//         temp--;
+//         temp2--;
+//     }
+//     temp = j + 1;
+//     while (temp < data->y)
+//     {
+//         if (is_valid(i, temp, data->map[temp][i], data))
+//         {
+//             data->map[temp][i] = temp + '0';
+//         }
+//         temp++;
+//     }
+//     temp = i + 1;
+//     temp2 = j - 1;
+//     while (temp < data->x && temp2 >= 0)
+//     {
+//         if (is_valid(temp, temp2, data->map[temp2][temp], data))
+//         {
+//             data->map[temp2][temp] = temp + '0';
+//         }
+//         temp++;
+//         temp2--;
+//     }
+//     temp = i - 1;
+//     temp2 = j + 1;
+//     while (temp2 < data->x && temp >= 0)
+//     {
+//         if (is_valid(temp, temp2, data->map[temp2][temp], data))
+//         {
+//             data->map[temp2][temp] = temp + '0';
+//         }
+//         temp--;
+//         temp2++;
+//     }
+//     return (0);
+return (0);
+}
+
+void         solve_it(int i, int j, char fill, t_fil *data)
 {
     while (j < data->y)
     {
@@ -176,7 +179,7 @@ void         solve_it(int i, int j, int fill, t_fil *data)
         {
             if (is_valid(i, j, data->map[j][i], data))
             {
-                data->map[j][i] = fill + '0';
+                data->map[j][i] = fill;
                 fill++;
             }
             i++;
@@ -185,9 +188,9 @@ void         solve_it(int i, int j, int fill, t_fil *data)
     }
 }
 
-int         put_token(int i, int j, t_fil *data)
+int          put_token(int i, int j, t_fil *data)
 {
-    printf("input is %c\n", data->map[j][i]);
+ //   printf("input is %c\n", data->map[j][i]);
     if (is_valid(i, j, data->map[j][i], data) && data->map[j][i] < data->min)
     {
         data->min = data->map[j][i];
@@ -196,13 +199,15 @@ int         put_token(int i, int j, t_fil *data)
     return (0);
 }
 
-void         full_put_token(t_fil *data)
+int         full_put_token(t_fil *data)
 {
     int j;
     int i;
-    
+
     i = data->p_x;
     j = data->p_y;
+    if (!data->p_y || !data->p_x)
+        return (0);
     put_token(i - 1, j - 1, data);
     put_token(i + 1, j + 1, data); // ||
     put_token(i, j + 1, data);
@@ -213,9 +218,56 @@ void         full_put_token(t_fil *data)
     put_token(i - 1, j + 1, data);
         printf("here you shoud place the token %c \n", data->min);
         //token_place(i, j, data);
+    return (0);
 }
 
-void         find_the_spot(int j, int i, t_fil *data)
+int         full_fill_it(int i, int j, t_fil *data)
+{
+    int tj;
+    int ti;
+    char r;
+
+    r = '0';
+    tj = j;
+    ti = i;
+    if (ft_isdigit(data->map[j][i]))
+        return (0);
+    while (tj < data->y)
+    {
+       if (fill_it(i, tj, r, data))
+            r++;
+        tj++;
+    }
+    r = '0';
+    ti = i;
+    while (ti < data->x)
+    {
+        if (fill_it(ti, j, r, data))
+            r++;
+        ti++;
+    }
+    r = '0';
+    fill_it(i - 1, j, r, data);
+    r = '0';
+    tj = j - 1;
+    while (tj >= 0)
+    {
+        if (fill_it(i, tj, r, data))
+            r++;
+        tj--;
+    }
+    r = '0';
+    fill_it(i - 1, j - 1, r, data);
+    r = '0';
+    fill_it(i + 1, j + 1, r, data);
+    r = '0';
+    fill_it(i + 1, j - 1, r, data);
+    r = '0';
+    fill_it(i - 1, j + 1, r, data);
+    return (0);
+}
+
+int        find_on_map_player(int j, int i, t_fil *data)
 {
     char    *p;
     char    *e;
@@ -237,13 +289,16 @@ void         find_the_spot(int j, int i, t_fil *data)
             {
                 data->e_x = i;
                 data->e_y = j;
-                fill_it(i, j, data);
+                full_fill_it(i, j, data);
+                return (0);
+                // fill_it(i - 1, j, data);
+                //data->i = 0;
             }
             i++;
         }
         j++;
     }
-    
+    return (1);
 }
 
 void         find_player(char *line, t_fil *data)
@@ -296,7 +351,7 @@ int          main(int argc, char **argv)
         argc++;
 		ft_strdel(&line);
 	}
-    find_the_spot(0, 0, &data);
+find_on_map_player(0, 0, &data);
     print_map(0, &data);
     full_put_token(&data);
     print_token(0, &data);
