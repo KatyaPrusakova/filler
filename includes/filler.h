@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/03 00:57:27 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/04 14:53:27 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@ typedef	struct		s_fil
 	int				end;
 	int				x;
 	int				y;
+	char			*p;
 	int				p_x;
 	int				p_y;
+	char			*e;
 	int				e_x;
 	int				e_y;
+	int				answer_x;
+	int				answer_y;
 	int				i;
 	char			min;
 }					t_fil;
@@ -47,6 +51,6 @@ typedef	struct		s_fil
 
 void				print_token(int j, t_fil *data);
 void				print_map(int j, t_fil *data);
-void        		solve_it(int i, int j, int fill, t_fil *data);
-void        		full_put_token(t_fil *data);
+void        		solve_it(int i, int j, char fill, t_fil *data);
+int        		full_put_token(t_fil *data);
 #endif
