@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/05 13:17:54 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/05 15:38:36 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ int         puterror(int i)
 
 void         get_token(char *line, t_fil *data)
 {
-    if (ft_strstr(line, "*"))
-    {
-        ft_strcpy(data->t[data->t_y], line);
-        data->t_y++;
-    }
+    ft_strcpy(data->t[data->t_y], line);
+    data->t_y++;
 }
 
 void         malloc_token(char *line, t_fil *data)
@@ -81,31 +78,32 @@ int         is_valid(int i, int j, t_fil *data)
     return (0);
 }
 
-
 // int         ftft_valid(int i, int j, t_fil *data)
 // {
 //     if (i >= 0 && j >= 0 && i <= data->x && j <= data->y &&!ft_strchr(data->e, data->map[j][i]))
 //         return (1);
 // }
 // from enemy plus one everytime its not end off map 
-int          put_numbers(int i, int j, char r, t_fil *data)
-{
-//    printf("input is %c j %d  i %d\n", data->map[j][i], j, i);
-    //if (ft_isdigit(data->map[j][i]))
-    //    return (0);
-    if (is_valid(i, j, data))
-    {
-        data->map[j][i] = r;
-        //solve_it(i, j, r, data);
-        return (1);
-    }
-    return (0);
-}
+// int          put_numbers(int i, int j, char r, t_fil *data)
+// {
+// //    printf("input is %c j %d  i %d\n", data->map[j][i], j, i);
+//     //if (ft_isdigit(data->map[j][i]))
+//     //    return (0);
+//     if (is_valid(i, j, data))
+//     {
+//         data->map[j][i] = r;
+//         //solve_it(i, j, r, data);
+//         return (1);
+//     }
+//     return (0);
+// }
 
 int          fill_it(int i, int j, char r, t_fil *data)
 {
-    if (put_numbers(i, j, r, data))
+     if (is_valid(i, j, data))
     {
+        data->map[j][i] = r;
+        //solve_it(i, j, r, data);
         return (1);
     }
     return (0);
@@ -181,6 +179,29 @@ void         solve_it(int i, int j, char fill, t_fil *data)
 //     return (0);
 // }
 
+void        find_best(int i, int j, t_fil *data)
+{
+     while (j < data->y)
+    {
+        i++;
+        while (i < data->x)
+        {
+            if (ft_isdigit(data->map[j][i]))
+            {
+                if (!data->i)
+                {
+                    data->i = data->map[j][i] - '0';
+                    data->min_x = data->answer_x;
+                    data->min_y = data->answer_y;
+                }
+                if (data->i && data->i < data->map[j][i])
+                    data->i = data->map[j][i] - '0';
+            }
+            i++;
+        }
+        j++;
+    }
+}
 int         full_fill_it(int i, int j, char r, t_fil *data)
 {
     int tj;
@@ -280,6 +301,8 @@ int         ft_can_fit(int i, int j, t_fil *data)
     ii = 0;
     a = 0;
     fake_i = i;
+    
+    data->answer_y = j;
     // while (ft_isdigit(data->map[j][i]) && )
     // if (data->map[j][i] && data->t[jj][ii])
     while (jj < data->t_y && j < data->y)
@@ -292,11 +315,10 @@ int         ft_can_fit(int i, int j, t_fil *data)
             {
                return (0);
             }
-            if (ft_strchr(data->p, data->map[j][i]) && data->t[jj][ii] == '*' && data->t[jj][ii+1] != '*')
+            if (ft_strchr(data->p, data->map[j][i]) && data->t[jj][ii] == '*')
             {
-                data->answer_x = i;
-                data->answer_y = j;
                 a++;
+                data->answer_x = i;
             }
             // data->map[j][i] = data->t[jj][ii];
             i++;
@@ -306,9 +328,10 @@ int         ft_can_fit(int i, int j, t_fil *data)
         jj++;
     }
  //   print_map(0, data);
-    if (a)
+    if (a == 1)
     {
-        printf("this is answer %d %d \n", data->answer_y, data->answer_x);
+        printf("answer %d %d \n", data->answer_y, data->answer_x);
+        find_best(data->answer_x, data->answer_y, data);
         return (1);
     }
     return (0);
@@ -316,18 +339,8 @@ int         ft_can_fit(int i, int j, t_fil *data)
 
 int        find_answer(int j, int i, t_fil *data)
 {
-    // int final_i;
-    // int final_j;
-    // i = data->p_x;
-    // j = data->p_y;
-    // i = data->p_x + data->t_x;
-    // j = data->p_y + data->t_y;
+
     printf("find player %s\n", data->p);
-    // if (is_valid(i, j, data->map[j][i], data))
-    // {
-    //     final_i = i;
-    //     final_j = j;
-    // }
     while (j < data->y)
     {
         i = 0;
@@ -345,7 +358,7 @@ int        find_answer(int j, int i, t_fil *data)
     return (0);
 }
 
-int        find_on_map_player(int j, int i, t_fil *data)
+int          find_on_map_player(int j, int i, t_fil *data)
 {
     data->p = data->player == 1? "oO" : "xX";
     data->e = data->enemy == 1? "oO" : "xX";
@@ -363,12 +376,8 @@ int        find_on_map_player(int j, int i, t_fil *data)
             if (ft_strchr(data->e, data->map[j][i]))
             {
                 data->e_x = i;
-                data->e_y = j;
-                 
+                data->e_y = j;               
                 full_fill_it(data->e_x, data->e_y, data->i + '0', data);
-                
-                // fill_it(i - 1, j, data);
-                //data->i = 0;
             }
             i++;
         }
@@ -400,7 +409,7 @@ int          main(int argc, char **argv)
     line = NULL;
     ft_bzero(&data, sizeof(t_fil));
     argc = 0;
-    data.min = (char)127;
+  
     if ((fd = open(argv[1], O_RDONLY)) == -1)
 	    puterror(0);
   //  while (get_next_line(0, &line) > 0)
@@ -433,6 +442,7 @@ int          main(int argc, char **argv)
    // full_put_token(&data);
     print_token(0, &data);
     find_answer(0, 0, &data);
+    printf("WOW! %d %d \n", data.min_y, data.min_x);
     return (0);
 }
 
