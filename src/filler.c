@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/05 12:51:39 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/05 13:17:54 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void         get_token(char *line, t_fil *data)
 {
     if (ft_strstr(line, "*"))
     {
-        data->t[data->t_y] = line;
+        ft_strcpy(data->t[data->t_y], line);
         data->t_y++;
     }
 }
@@ -407,11 +407,7 @@ int          main(int argc, char **argv)
 	while (get_next_line(fd, &line) > 0)
 	{
         printf("%d|| %s ||\n", argc, line);
-        if (ft_strstr(line, "Piece "))
-        {
-            data.end = 1;
-            malloc_token(line, &data);   
-        }
+        
         if (ft_strstr(line, "$$$ exec"))
             find_player(line, &data);
         if (ft_strstr(line, "Plateau ") && !data.x)
@@ -423,6 +419,11 @@ int          main(int argc, char **argv)
             get_token(line, &data);
             data.end = ft_strstr(line, "<got ") ? 0 : 1;
             data.i = 0;
+        }
+        if (ft_strstr(line, "Piece "))
+        {
+            malloc_token(line, &data);   
+            data.end = 1;
         }
         argc++;
 		ft_strdel(&line);
