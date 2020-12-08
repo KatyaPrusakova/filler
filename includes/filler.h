@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 18:32:43 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 19:41:12 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define X		"Xx"
 # define O		"Oo"
 
- int     fd = 0;
+
  
 typedef	struct		s_fil
 {
@@ -57,4 +57,19 @@ void				print_token(int j, t_fil *data);
 void				print_map(int j, t_fil *data);
 void        		solve_it(int i, int j, char fill, t_fil *data);
 int        			full_put_token(t_fil *data);
+
+/*
+** ------ MALLOC_FREE.C ------
+*/
+
+int					puterror(int i);
+int         		get_token(char *line, t_fil *data);
+void        		malloc_token(char *line, t_fil *data);
+void        		malloc_map(char *line, t_fil *data);
+
+/*
+** ------ TOOLS.C ------
+*/
+
+int         		is_valid(int i, int j, t_fil *data);
 #endif

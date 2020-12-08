@@ -6,74 +6,11 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 18:38:08 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 19:42:17 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-int         puterror(int i)
-{
-    if (i == 0)
-        exit (0);
-    return (0);
-}
-
-int         get_token(char *line, t_fil *data)
-{
-    if (data->raz < data->t_y)
-    {
-        ft_strcpy(data->t[data->raz], line);
-        data->raz++;
-        return (1);
-    }
-    else 
-        return (0);
-    return (0);
-}
-
-void         malloc_token(char *line, t_fil *data)
-{
-    int     i;
-
-    i = 0;
-    while (*line != ' ')
-        line++;
-    line++;
-    data->t_y = ft_atoi(line);
-    while (ft_isdigit(*line))
-        line++;
-    data->t_x = ft_atoi(line);
-    if (!(data->t = (char**)ft_memalloc(sizeof(char*) * data->t_y + 1)))
-        puterror(0);
-    while (i < data->t_y)
-        data->t[i++] = (char*)ft_memalloc(sizeof(char) * data->t_x + 1);
-}
-
-void         malloc_map(char *line, t_fil *data)
-{
-    int     i;
-
-    i = 0;
-    while (*line != ' ')
-        line++;
-    line++;
-    data->y = ft_atoi(line);
-    while (ft_isdigit(*line))
-        line++;
-    data->x = ft_atoi(line);
-    if (!(data->map = (char**)ft_memalloc(sizeof(char*) * data->y + 1)))
-        puterror(0);
-    while (i < data->y)
-        data->map[i++] = (char*)ft_memalloc(sizeof(char) * data->x + 1);
-}
-
-int         is_valid(int i, int j, t_fil *data)
-{
-    if (i >= 0 && j >= 0 && i <= data->x && j <= data->y &&!ft_strchr(O, data->map[j][i]) && !ft_strchr(X, data->map[j][i]))
-        return (1);
-    return (0);
-}
 
 int          fill_it(int i, int j, char r, t_fil *data)
 {
@@ -117,6 +54,7 @@ void        find_best(int i, int j, t_fil *data)
         j++;
     }
 }
+
 int         full_fill_it(int i, int j, char r, t_fil *data)
 {
     int tj;
@@ -205,7 +143,7 @@ int         full_fill_it(int i, int j, char r, t_fil *data)
     return (0);
 }
 
-int         ft_can_fit(int i, int j, t_fil *data)
+int          ft_can_fit(int i, int j, t_fil *data)
 {
     int jj;
     int ii;
@@ -258,7 +196,7 @@ int         ft_can_fit(int i, int j, t_fil *data)
     return (0);
 }
 
-int        find_answer(int j, int i, t_fil *data)
+int          find_answer(int j, int i, t_fil *data)
 {
 
  //   printf("find player %s\n", data->p);
@@ -320,17 +258,17 @@ void         find_player(char *line, t_fil *data)
      }
     
 }
-// (void)
+
 int          main(void)
 {
     t_fil   data;
     char    *line;
 
-    
+    int     fd = 0;
     line = NULL;
     ft_bzero(&data, sizeof(t_fil));
   
- // fd = open("testi", O_RDONLY);
+    fd = open("testi", O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 	{
      //   printf("%d|| %s ||\n", argc, line);
@@ -356,9 +294,6 @@ int          main(void)
 	}
     ft_strdel(&line);
     find_on_map_player(0, 0, &data);
- //   print_map(0, &data);
-   // full_put_token(&data);
- //   print_token(0, &data);
     find_answer(0, 0, &data);
 //    printf("WOW! %d %d \n", data.min_y, data.min_x);
     ft_putnbr(data.min_y);
@@ -367,6 +302,7 @@ int          main(void)
 	ft_putchar('\n');
     
 }
+
 
 void	print_map(int j, t_fil *data)
 {

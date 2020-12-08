@@ -6,7 +6,7 @@
 #    By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/15 11:04:15 by eprusako          #+#    #+#              #
-#    Updated: 2020/12/01 23:07:36 by eprusako         ###   ########.fr        #
+#    Updated: 2020/12/08 19:38:07 by eprusako         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFT = ./libft/
 DIR_SRC = src
 HEADER = -I includes/
 
-SRC = filler.c
+SRC = filler.c malloc_free.c tools.c
 YELLOW = "\033[1;33m"
 NOCOLOR = "\033[0m"
 
