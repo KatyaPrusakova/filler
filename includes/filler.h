@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 21:10:47 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 23:51:04 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define X		"Xx"
 # define O		"Oo"
-
+# define M_INT	 2147483647
 
  
 typedef	struct		s_fil
@@ -36,8 +36,8 @@ typedef	struct		s_fil
 	int				x;
 	int				y;
 	char			*p;
-	int				p_x;
-	int				p_y;
+//	int				p_x;
+//	int				p_y;
 	char			*e;
 	int				e_x;
 	int				e_y;

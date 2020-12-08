@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 21:34:19 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 23:53:09 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,19 +224,12 @@ int          find_answer(int j, int i, t_fil *data)
 
 int          find_on_map_player(int j, int i, t_fil *data)
 {
-    data->p = data->player == 1? "oO" : "xX";
-    data->e = data->enemy == 1? "oO" : "xX";
-
+  
     while (j < data->y)
     {
         i = 0;
         while (i < data->x)
         {
-            if (ft_strchr(data->p, data->map[j][i]))
-            {
-                data->p_x = i;
-                data->p_y = j;
-            }
             if (ft_strchr(data->e, data->map[j][i]))
             {
                 data->e_x = i;
@@ -254,14 +247,21 @@ void         find_player(char *line, t_fil *data)
 {
     char *s;
     
-     if (ft_strstr(line, "eprusako"))
+    s = ft_strchr(line, 'p');
+    if (ft_strstr(line, "eprusako"))
      {
-        s = ft_strchr(line, 'p');
-        data->player = s[1] - '0';
-        data->enemy = data->player == 1 ? 2 : 1;
+        data->player = 1;
+        data->enemy = 2;
         // printf("%d|| data->player ||\n", data->player);
      }
-    
+    else
+    {
+        data->player = 2;
+        data->enemy = 1;
+    }
+    data->p = data->player == 1? "oO" : "xX";
+    data->e = data->enemy == 1? "oO" : "xX";
+
 }
 
 void	     play_game(int fd , char *line, t_fil *data)
@@ -303,13 +303,9 @@ int          main(void)
     ft_bzero(&data, sizeof(t_fil));
   
     fd = open("testi", O_RDONLY);
-	while (get_next_line(fd, &line) > 0)
+	if (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
 	{
-        if (ft_strstr(line, "$$$ exec"))
-        {
-            find_player(line, &data);
-            break;
-        }
+        find_player(line, &data);
 		ft_strdel(&line);
 	}
     play_game(fd, line, &data);
