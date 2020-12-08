@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/05 15:38:36 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 15:00:20 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@ int         puterror(int i)
     return (0);
 }
 
-void         get_token(char *line, t_fil *data)
+int         get_token(char *line, t_fil *data)
 {
-    ft_strcpy(data->t[data->t_y], line);
-    data->t_y++;
+    if (data->raz < data->t_y)
+    {
+        ft_strcpy(data->t[data->raz], line);
+        data->raz++;
+        return (1);
+    }
+    else 
+        return (0);
+    return (0);
 }
 
 void         malloc_token(char *line, t_fil *data)
@@ -50,7 +57,6 @@ void         malloc_token(char *line, t_fil *data)
         puterror(0);
     while (i < data->t_y)
         data->t[i++] = (char*)ft_memalloc(sizeof(char) * data->t_x + 1);
-    data->t_y = 0;
 }
 
 void         malloc_map(char *line, t_fil *data)
@@ -77,26 +83,6 @@ int         is_valid(int i, int j, t_fil *data)
         return (1);
     return (0);
 }
-
-// int         ftft_valid(int i, int j, t_fil *data)
-// {
-//     if (i >= 0 && j >= 0 && i <= data->x && j <= data->y &&!ft_strchr(data->e, data->map[j][i]))
-//         return (1);
-// }
-// from enemy plus one everytime its not end off map 
-// int          put_numbers(int i, int j, char r, t_fil *data)
-// {
-// //    printf("input is %c j %d  i %d\n", data->map[j][i], j, i);
-//     //if (ft_isdigit(data->map[j][i]))
-//     //    return (0);
-//     if (is_valid(i, j, data))
-//     {
-//         data->map[j][i] = r;
-//         //solve_it(i, j, r, data);
-//         return (1);
-//     }
-//     return (0);
-// }
 
 int          fill_it(int i, int j, char r, t_fil *data)
 {
@@ -127,60 +113,13 @@ void         solve_it(int i, int j, char fill, t_fil *data)
     }
 }
 
-// int          ft_valid(int i, int j, int ii, int jj, t_fil *data)
-// {
-//     if ( ft_strchr(data->p, data->map[j - 1][i]) && data->t[jj -1 ][ii] != '*')
-    
-//         ftft_valid(i , j - 1, data) ||
-//     ftft_valid(i + 1, j + 1, data) ||
-//     ftft_valid(i, j + 1, data) ||
-//     ftft_valid(i + 1, j, data) ||
-//     ftft_valid(i - 1, j, data) ||
-//     ftft_valid(i, j - 1,  data) ||
-//     ftft_valid(i + 1, j - 1, data) ||
-//     ftft_valid(i - 1, j + 1, data) )
-//     {
-//         return (1);
-//     }
-//     return (0);
-// }
-
-// int          put_token(int i, int j, t_fil *data)
-// {
-//  //   printf("input is %c\n", data->map[j][i]);
- 
-//     if (is_valid(i, j, data) && data->map[j][i] < data->min)
-//     {
-//         data->min = data->map[j][i];
-//         return (1);
-//     }
-//     return (0);
-// }
-
-// int         full_put_token(t_fil *data)
-// {
-//     int j;
-//     int i;
-
-//     i = data->p_x;
-//     j = data->p_y;
-//     if (!data->p_y || !data->p_x)
-//         return (0);
-//     put_token(i - 1, j - 1, data);
-//     put_token(i + 1, j + 1, data);
-//     put_token(i, j + 1, data);
-//     put_token(i + 1, j, data);
-//     put_token(i - 1, j, data);
-//     put_token(i, j - 1, data);
-//     put_token(i + 1, j - 1, data);
-//     put_token(i - 1, j + 1, data);
-//         printf("here you shoud place the token %c \n", data->min);
-//         //token_place(i, j, data);
-//     return (0);
-// }
-
 void        find_best(int i, int j, t_fil *data)
 {
+    int jj;
+    int ii;
+
+    jj = data->e_y - data->answer_y;
+    ii = data->e_x - data->answer_x;
      while (j < data->y)
     {
         i++;
@@ -190,12 +129,16 @@ void        find_best(int i, int j, t_fil *data)
             {
                 if (!data->i)
                 {
-                    data->i = data->map[j][i] - '0';
+                    data->i = jj + ii;
                     data->min_x = data->answer_x;
                     data->min_y = data->answer_y;
                 }
-                if (data->i && data->i < data->map[j][i])
-                    data->i = data->map[j][i] - '0';
+                if (data->i && data->i > jj + ii)
+                {
+                    data->i = jj + ii;
+                    data->min_x = data->answer_x;
+                    data->min_y = data->answer_y;
+                }
             }
             i++;
         }
@@ -296,12 +239,15 @@ int         ft_can_fit(int i, int j, t_fil *data)
     int ii;
     int a;
     int fake_i;
+    int final_j;
+    int final_i;
     
     jj = 0;
     ii = 0;
     a = 0;
     fake_i = i;
-    
+    final_j = j;
+    final_i = i;
     data->answer_y = j;
     // while (ft_isdigit(data->map[j][i]) && )
     // if (data->map[j][i] && data->t[jj][ii])
@@ -327,11 +273,14 @@ int         ft_can_fit(int i, int j, t_fil *data)
         j++;
         jj++;
     }
- //   print_map(0, data);
+ //   print_map(0, data); answer точки соприкосновения однако нам нужны изначальные j i
+       
     if (a == 1)
     {
-        printf("answer %d %d \n", data->answer_y, data->answer_x);
+     //   printf("answer a |%d| %d %d %d %d \n", a, final_j, final_i, data->answer_y, data->answer_x);
         find_best(data->answer_x, data->answer_y, data);
+        data->min_x = final_i;
+        data->min_y = final_j;
         return (1);
     }
     return (0);
@@ -340,7 +289,7 @@ int         ft_can_fit(int i, int j, t_fil *data)
 int        find_answer(int j, int i, t_fil *data)
 {
 
-    printf("find player %s\n", data->p);
+ //   printf("find player %s\n", data->p);
     while (j < data->y)
     {
         i = 0;
@@ -399,8 +348,8 @@ void         find_player(char *line, t_fil *data)
      }
     
 }
-
-int          main(int argc, char **argv) 
+// (void)
+int          main(int argc, char **argv)
 {
     t_fil   data;
     char    *line;
@@ -408,14 +357,14 @@ int          main(int argc, char **argv)
     
     line = NULL;
     ft_bzero(&data, sizeof(t_fil));
-    argc = 0;
+   argc = 0;
   
-    if ((fd = open(argv[1], O_RDONLY)) == -1)
-	    puterror(0);
-  //  while (get_next_line(0, &line) > 0)
+  if ((fd = open(argv[1], O_RDONLY)) == -1)
+	  puterror(0);
 	while (get_next_line(fd, &line) > 0)
+     // while (get_next_line(0, &line) > 0)
 	{
-        printf("%d|| %s ||\n", argc, line);
+     //   printf("%d|| %s ||\n", argc, line);
         
         if (ft_strstr(line, "$$$ exec"))
             find_player(line, &data);
@@ -425,25 +374,30 @@ int          main(int argc, char **argv)
             data.map[data.i++] = ft_strsub(line, 4, data.x);
         else if (data.end)
         {
-            get_token(line, &data);
-            data.end = ft_strstr(line, "<got ") ? 0 : 1;
             data.i = 0;
+            if (!get_token(line, &data))
+                break;
         }
         if (ft_strstr(line, "Piece "))
         {
             malloc_token(line, &data);   
             data.end = 1;
         }
-        argc++;
+    //    argc++;
 		ft_strdel(&line);
 	}
+    ft_strdel(&line);
     find_on_map_player(0, 0, &data);
-    print_map(0, &data);
+ //   print_map(0, &data);
    // full_put_token(&data);
-    print_token(0, &data);
+ //   print_token(0, &data);
     find_answer(0, 0, &data);
-    printf("WOW! %d %d \n", data.min_y, data.min_x);
-    return (0);
+//    printf("WOW! %d %d \n", data.min_y, data.min_x);
+    ft_putnbr(data.min_y);
+	ft_putchar(' ');
+	ft_putnbr(data.min_x);
+	ft_putchar('\n');
+    
 }
 
 void	print_map(int j, t_fil *data)

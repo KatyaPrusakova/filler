@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/05 15:14:23 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 14:49:24 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef	struct		s_fil
 	int				answer_x;
 	int				answer_y;
 	int				i;
+	int				raz;
 	int				min_x;
 	int				min_y;
 }					t_fil;
