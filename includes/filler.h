@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 14:49:24 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:32:43 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define X		"Xx"
 # define O		"Oo"
 
+ int     fd = 0;
+ 
 typedef	struct		s_fil
 {
 	int				player;

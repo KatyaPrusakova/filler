@@ -6,20 +6,11 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 15:00:20 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:38:08 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-// char    *filler(char **s)
-// {
-//     char *ss = "8 1";
-//    if (s[0] == ss)
-//         return (ss);
-//     printf("THIS IS FILLER\n  %s", ss);
-//     return (ss);
-// }
 
 int         puterror(int i)
 {
@@ -89,28 +80,9 @@ int          fill_it(int i, int j, char r, t_fil *data)
      if (is_valid(i, j, data))
     {
         data->map[j][i] = r;
-        //solve_it(i, j, r, data);
         return (1);
     }
     return (0);
-}
-
-void         solve_it(int i, int j, char fill, t_fil *data)
-{
-    while (j < data->y)
-    {
-        i++;
-        while (i < data->x)
-        {
-            if (is_valid(i, j, data))
-            {
-                data->map[j][i] = fill;
-                fill++;
-            }
-            i++;
-        }
-        j++;
-    }
 }
 
 void        find_best(int i, int j, t_fil *data)
@@ -349,20 +321,17 @@ void         find_player(char *line, t_fil *data)
     
 }
 // (void)
-int          main(int argc, char **argv)
+int          main(void)
 {
     t_fil   data;
     char    *line;
-    int     fd;
+
     
     line = NULL;
     ft_bzero(&data, sizeof(t_fil));
-   argc = 0;
   
-  if ((fd = open(argv[1], O_RDONLY)) == -1)
-	  puterror(0);
+ // fd = open("testi", O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
-     // while (get_next_line(0, &line) > 0)
 	{
      //   printf("%d|| %s ||\n", argc, line);
         
@@ -383,7 +352,6 @@ int          main(int argc, char **argv)
             malloc_token(line, &data);   
             data.end = 1;
         }
-    //    argc++;
 		ft_strdel(&line);
 	}
     ft_strdel(&line);

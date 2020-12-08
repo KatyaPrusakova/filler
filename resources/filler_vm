@@ -534,6 +534,8 @@ if __FILE__ == $0
 						player.end_player trace
 					end
 					if (player.live > 0 && (nb = @line.gsub(/\s+/m, ' ').strip.split(" ")).length != 2)
+						
+						puts "This is my output:" + @line
 						puts "Player with #{player.piece_char}: error on input"
 						trace.trace_msg "#{player.piece_char}: error on input\n"
 						player.end_player trace
