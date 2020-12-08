@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 15:00:20 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:12:47 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,59 +344,71 @@ void         find_player(char *line, t_fil *data)
         s = ft_strchr(line, 'p');
         data->player = s[1] - '0';
         data->enemy = data->player == 1 ? 2 : 1;
+        data->next_step = 1;
         // printf("%d|| data->player ||\n", data->player);
      }
     
 }
-// (void)
-int          main(int argc, char **argv)
+
+void         play_game(t_fil *data)
 {
-    t_fil   data;
-    char    *line;
-    int     fd;
-    
-    line = NULL;
-    ft_bzero(&data, sizeof(t_fil));
-   argc = 0;
-  
-  if ((fd = open(argv[1], O_RDONLY)) == -1)
-	  puterror(0);
-	while (get_next_line(fd, &line) > 0)
-     // while (get_next_line(0, &line) > 0)
+    char *line;
+
+    while ((get_next_line(0, &line) > -1) && data->next_step == 1)
 	{
      //   printf("%d|| %s ||\n", argc, line);
-        
-        if (ft_strstr(line, "$$$ exec"))
-            find_player(line, &data);
-        if (ft_strstr(line, "Plateau ") && !data.x)
-            malloc_map(line, &data);
-        if (ft_isdigit(line[0]) && !data.end)
-            data.map[data.i++] = ft_strsub(line, 4, data.x);
-        else if (data.end)
+        if (ft_strstr(line, "Plateau ") && !data->x)
+            malloc_map(line, data);
+        if (ft_isdigit(line[0]) && !data->end)
+            data->map[data->i++] = ft_strsub(line, 4, data->x);
+        else if (data->end)
         {
-            data.i = 0;
-            if (!get_token(line, &data))
+            data->i = 0;
+            if (!get_token(line, data))
                 break;
         }
         if (ft_strstr(line, "Piece "))
         {
-            malloc_token(line, &data);   
-            data.end = 1;
+            malloc_token(line, data);   
+            data->end = 1;
         }
-    //    argc++;
 		ft_strdel(&line);
 	}
-    ft_strdel(&line);
-    find_on_map_player(0, 0, &data);
+     
+    find_on_map_player(0, 0, data);
+    find_answer(0, 0, data);
+    ft_putnbr(data->min_y);
+	ft_putchar(' ');
+	ft_putnbr(data->min_x);
+	ft_putchar('\n');
+   // freemap(data);
+}
+
+int          main(void)
+{
+    t_fil   data;
+    char    *line;
+    int     fd;
+    line = NULL;
+    ft_bzero(&data, sizeof(t_fil)); 
+    fd = open("testi", O_RDONLY);
+
+     while (get_next_line(fd, &line) && !data.next_step)
+	{
+     //   printf("%d|| %s ||\n", argc, line);
+        if (ft_strstr(line, "$$$ exec"))
+        {
+            find_player(line, &data);
+            play_game(&data);
+            break;
+        }
+		ft_strdel(&line);
+	}
  //   print_map(0, &data);
    // full_put_token(&data);
  //   print_token(0, &data);
-    find_answer(0, 0, &data);
+   
 //    printf("WOW! %d %d \n", data.min_y, data.min_x);
-    ft_putnbr(data.min_y);
-	ft_putchar(' ');
-	ft_putnbr(data.min_x);
-	ft_putchar('\n');
     
 }
 
