@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 19:41:12 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 21:10:47 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int        			full_put_token(t_fil *data);
 
 int					puterror(int i);
 int         		get_token(char *line, t_fil *data);
-void        		malloc_token(char *line, t_fil *data);
+void        		malloc_token(int fd, char *line, t_fil *data);
 void        		malloc_map(char *line, t_fil *data);
 
 /*

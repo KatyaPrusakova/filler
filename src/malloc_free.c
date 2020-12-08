@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 19:35:13 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 21:09:24 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,11 @@ int         puterror(int i)
     return (0);
 }
 
-int         get_token(char *line, t_fil *data)
-{
-    if (data->raz < data->t_y)
-    {
-        ft_strcpy(data->t[data->raz], line);
-        data->raz++;
-        return (1);
-    }
-    else 
-        return (0);
-    return (0);
-}
+/*
+** Parsing the token
+*/
 
-void        malloc_token(char *line, t_fil *data)
+void        malloc_token(int fd, char *line, t_fil *data)
 {
     int     i;
 
@@ -48,7 +39,18 @@ void        malloc_token(char *line, t_fil *data)
         puterror(0);
     while (i < data->t_y)
         data->t[i++] = (char*)ft_memalloc(sizeof(char) * data->t_x + 1);
+    i = 0;
+    while (get_next_line(fd, &line) && (line[0] == '.' || line[0] == '*'))
+    {
+        while (data->raz < data->t_y)
+        {
+            ft_strcpy(data->t[data->raz], line);
+            data->raz++;
+        }
+        ft_strdel(&line);
+    }
 }
+
 
 void        malloc_map(char *line, t_fil *data)
 {

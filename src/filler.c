@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 20:22:03 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/08 21:19:28 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,11 @@ int          find_answer(int j, int i, t_fil *data)
                 data->answer_x = i;
                 data->answer_y = j;
             }
+            else
+            {
+                data->end = 1;
+            }
+            
             i++;
         }
         j++;
@@ -261,36 +266,33 @@ void         find_player(char *line, t_fil *data)
 
 void	     play_game(int fd , char *line, t_fil *data)
 {
-    while (get_next_line(fd, &line) > 0)
+    while (get_next_line(fd, &line) > -1 && !data->end)
 	{
      //   printf("%d|| %s ||\n", argc, line);
         if (ft_strstr(line, "Plateau ") )
             malloc_map(line, data);
         if (ft_isdigit(line[0]) && !data->end)
             data->map[data->i++] = ft_strsub(line, 4, data->x);
-        else if (data->end)
-        {
-            data->i = 0;
-            if (!get_token(line, data))
-                break;
-        }
         if (ft_strstr(line, "Piece "))
         {
-            malloc_token(line, data);   
-            data->end = 1;
+            malloc_token(fd, line, data);
+            data->i = 0;
+            find_on_map_player(0, 0, data);
+            find_answer(0, 0, data);
+            ft_putnbr(data->min_y);
+            ft_putchar(' ');
+            ft_putnbr(data->min_x);
+            ft_putchar('\n');
         }
 		ft_strdel(&line);
 	}
     free(line);
-    find_on_map_player(0, 0, data);
-    find_answer(0, 0, data);
 //    printf("WOW! %d %d \n", data.min_y, data.min_x);
-    ft_putnbr(data->min_y);
-	ft_putchar(' ');
-	ft_putnbr(data->min_x);
-	ft_putchar('\n');
     
 }
+
+//add if no option put value data->end to 1
+
 int          main(void)
 {
     t_fil   data;
@@ -331,3 +333,5 @@ void	print_token(int j, t_fil *data)
 		j++;
 	}
 }
+
+                
