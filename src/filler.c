@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 23:53:09 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/09 11:05:39 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,92 +55,17 @@ void        find_best(int i, int j, t_fil *data)
     }
 }
 
-int         full_fill_it(int i, int j, char r, t_fil *data)
+void		make_map(int x, int y, t_fil *data)
 {
-    int tj;
-    int ti;
-    char c;
-
-    
-    tj = j;
-    ti = i;
-    j = tj;
-    i = ti;
-    c = r;
-    while (i < data->x)
-    {
-        if (fill_it(i, j, r, data))
-           r++;
-        i++;
-    }
-    j = tj;
-    i = ti;
-    r = c;
-    while (j < data->y)
-    {
-        if(fill_it(i, j, r, data))
-            r++;
-        j++;
-    }
-    j = tj;
-    i = ti;
-    r = c;
-    while (i < data->x && j < data->y)
-    {
-        if (fill_it(i, j, r, data))
-           r++;
-        i++;
-        j++;
-    }
-    j = tj;
-    i = ti;
-    r = c;
-    while (i >= 0 && j >= 0)
-    {
-        if (fill_it(i, j, r, data))
-           r++;
-        i--;
-        j--;
-    }
-    j = tj;
-    i = ti;
-    r = c;
-    while (i >= 0)
-    {
-        if (fill_it(i, j, r, data))
-           r++;
-        i--;
-    }
-    j = tj;
-    i = ti;
-    r = c;
-    while (j >= 0)
-    {
-        if (fill_it(i, j, r, data))
-           r++;
-        j--;
-    }
-    j = tj;
-    i = ti;
-    r = c;
-    while (i < data->x && j >= 0)
-    {
-        if (fill_it(i, j, r, data))
-           r++;
-        i++;
-        j--;
-    }
-    j = tj;
-    i = ti;
-    r = c;
-    while (j < data->y && i >= 0)
-    {
-        if (fill_it(i, j, r, data))
-           r++;
-        j++;
-        i--;
-    }
-    return (0);
+	if ((x - 1 >= 0 && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x - 1])) ||
+			(y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x])) ||
+			(x + 1 < data->x && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x + 1])) ||
+			(x - 1 >= 0 && ft_strchr(data->e, data->map[y][x - 1])) ||
+			(x + 1 < data->x && ft_strchr(data->e, data->map[y][x + 1])) ||
+			(x - 1 >= 0 && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x - 1])) ||
+			(y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x])) ||
+			(x + 1 < data->x && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x + 1])))
+		data->map[y][x] = 1 + '0';
 }
 
 int          ft_can_fit(int i, int j, t_fil *data)
@@ -214,7 +139,6 @@ int          find_answer(int j, int i, t_fil *data)
             {
                 data->end = 1;
             }
-            
             i++;
         }
         j++;
@@ -224,45 +148,65 @@ int          find_answer(int j, int i, t_fil *data)
 
 int          find_on_map_player(int j, int i, t_fil *data)
 {
-  
-    while (j < data->y)
-    {
-        i = 0;
-        while (i < data->x)
+    // int c;
+
+    // c = 1;
+    // while (c < (data->y + data->x))
+	// {
+	// 	j = 0;
+        while (j < data->y)
         {
-            if (ft_strchr(data->e, data->map[j][i]))
+            i = 0;
+            while (i < data->x)
             {
-                data->e_x = i;
-                data->e_y = j;               
-                full_fill_it(data->e_x, data->e_y, data->i + '0', data);
+                if (data->map[j][i] == '.')  
+                    make_map(i, j, data);
+                i++;
             }
-            i++;
+            j++;
         }
-        j++;
-    }
+   //     c++;
+  //  }
+    print_map(0, data);
     return (1);
+    // while (j < data->y)
+    // {
+    //     i = 0;
+    //     while (i < data->x)
+    //     {
+    //         if (ft_strchr(data->e, data->map[j][i]))
+    //         {
+    //             data->e_x = i;
+    //             data->e_y = j;               
+    //             full_fill_it(data->e_x, data->e_y, data->i + '0', data);
+    //         }
+    //         i++;
+    //     }
+    //     j++;
+    // }
+    // return (1);
 }
 
 void         find_player(char *line, t_fil *data)
 {
-    char *s;
-    
-    s = ft_strchr(line, 'p');
-    if (ft_strstr(line, "eprusako"))
+    if (ft_strstr(line, "$$$ exec ") )
      {
-        data->player = 1;
-        data->enemy = 2;
-        // printf("%d|| data->player ||\n", data->player);
+         if (ft_strstr(line, "eprusako"))
+        {
+            
+            data->p = "oO";
+            data->e = "xX";
+        }
+        else
+        {
+            data->e = "oO";
+            data->p = "xX";
+        }
      }
-    else
-    {
-        data->player = 2;
-        data->enemy = 1;
-    }
-    data->p = data->player == 1? "oO" : "xX";
-    data->e = data->enemy == 1? "oO" : "xX";
-
+     free(line);
 }
+
+// printf("%d|| data->player ||\n", data->player);
 
 void	     play_game(int fd , char *line, t_fil *data)
 {
@@ -303,11 +247,11 @@ int          main(void)
     ft_bzero(&data, sizeof(t_fil));
   
     fd = open("testi", O_RDONLY);
-	if (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
+	while (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
 	{
-        find_player(line, &data);
 		ft_strdel(&line);
 	}
+    find_player(line, &data);
     play_game(fd, line, &data);
 }
 

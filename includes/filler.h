@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 23:51:04 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/09 10:02:35 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
  
 typedef	struct		s_fil
 {
-	int				player;
-	int				enemy;
 	char			**map;
 	char			**t;
 	int				t_x;
@@ -36,8 +34,6 @@ typedef	struct		s_fil
 	int				x;
 	int				y;
 	char			*p;
-//	int				p_x;
-//	int				p_y;
 	char			*e;
 	int				e_x;
 	int				e_y;
