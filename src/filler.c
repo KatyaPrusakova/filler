@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/09 14:55:03 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/09 15:04:28 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int          numbers_to_map(int i, int j, t_fil *data)
         }
        c++;
    }
-    print_map(0, data);
+   // print_map(0, data);
     return (1);
 }
 
@@ -60,7 +60,7 @@ int          fill_it(int i, int j, char r, t_fil *data)
     return (0);
 }
 
-void        find_best(int i, int j, t_fil *data)
+void         find_best(int i, int j, t_fil *data)
 {
     int jj;
     int ii;
@@ -93,7 +93,7 @@ void        find_best(int i, int j, t_fil *data)
     }
 }
 
-void		make_map(int x, int y, t_fil *data)
+void		 make_map(int x, int y, t_fil *data)
 {
 	if ((x - 1 >= 0 && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x - 1])) ||
 			(y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x])) ||
@@ -205,7 +205,7 @@ int          find_on_map_player(int j, int i, t_fil *data)
         }
    //     c++;
   //  }
-    print_map(0, data);
+  //  print_map(0, data);
     numbers_to_map(0, 0, data);
     return (1);
     // while (j < data->y)
@@ -232,7 +232,6 @@ void         find_player(char *line, t_fil *data)
      {
          if (ft_strstr(line, "eprusako"))
         {
-            
             data->p = "oO";
             data->e = "xX";
         }
