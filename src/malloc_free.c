@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/08 21:31:32 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:01:23 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ int         puterror(int i)
 ** Parsing the token
 */
 
+extern int g_fd;
+
 void        malloc_token(int fd, char *line, t_fil *data)
 {
     int     i;
+	int		tmp;
 
     i = 0;
     while (*line != ' ')
@@ -40,8 +43,13 @@ void        malloc_token(int fd, char *line, t_fil *data)
     while (i < data->t_y)
         data->t[i++] = (char*)ft_memalloc(sizeof(char) * data->t_x + 1);
     i = 0;
-    while (get_next_line(fd, &line) && (line[0] == '.' || line[0] == '*'))
+	tmp = data->t_y;
+	dprintf(g_fd, "%d\n", data->t_y);
+    while (tmp--)
     {
+		get_next_line(fd, &line);
+		
+		dprintf(g_fd, "%s\n", line);
         while (data->raz < data->t_y)
         {
             ft_strcpy(data->t[data->raz], line);
