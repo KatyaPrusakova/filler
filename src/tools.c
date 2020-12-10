@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:52:16 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 18:37:03 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 21:40:58 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,16 @@ void		 make_map2(int c, int x, int y, t_fil *data)
             data->map[y][x] = c +  1;
 }
 
+int		 enemy(int x, int y, t_fil *data)
+{
+	if ((x - 1 >= 0 && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x - 1])) ||
+			(y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x])) ||
+			(x + 1 < data->x && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x + 1])) ||
+			(x - 1 >= 0 && ft_strchr(data->e, data->map[y][x - 1])) ||
+			(x + 1 < data->x && ft_strchr(data->e, data->map[y][x + 1])) ||
+			(x - 1 >= 0 && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x - 1])) ||
+			(y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x])) ||
+			(x + 1 < data->x && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x + 1])))
+            return (0);
+    return  (1);
+}

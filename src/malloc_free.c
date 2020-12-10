@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 19:43:01 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 21:19:26 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ extern int g_fd;
 void        malloc_token(int fd, char *line, t_fil *data)
 {
     int     i;
-	int		tmp;
 
     i = 0;
     
@@ -44,21 +43,19 @@ void        malloc_token(int fd, char *line, t_fil *data)
     while (i < data->t_y)
         data->t[i++] = (char*)ft_memalloc(sizeof(char) * data->t_x + 1);
     i = 0;
-	tmp = data->t_y;
 //	dprintf(g_fd, "%d\n", data->t_y);
-    while (tmp--)
+
+    int j = 0;
+    while (i++ < data->t_y)
     {
-		get_next_line(fd, &line);
-		
-//		dprintf(g_fd, "%s\n", line);
-        while (data->raz < data->t_y)
-        {
-            ft_strcpy(data->t[data->raz], line);
-            data->raz++;
-        }
+		get_next_line(fd, &line);		
+		dprintf(g_fd, "%s\n", line);
+        ft_strcpy(data->t[j], line);
+        j++;
         ft_strdel(&line);
     }
     create_map(0, 0, data);
+    j = 0;
 }
 
 void        malloc_map(int fd, char *line, t_fil *data)
@@ -87,12 +84,7 @@ void        malloc_map(int fd, char *line, t_fil *data)
         i++;
       //  ft_strdel(&line);
     }
-    int j = 0;
-		while (j < data->y)
-		{
-			dprintf(g_fd, "|%s|\n", data->map[j]);
-			j++;
-		}
+   
 }
 
 void		free_map(t_fil *data)
@@ -110,4 +102,25 @@ void		free_map(t_fil *data)
 		data->map = NULL;
 	}
 	ft_memdel((void **)&data->map);
+}
+
+/*
+** Free one token
+*/
+
+void		free_piece(t_fil *data)
+{
+	int		i;
+	char	*str;
+
+	if (!data->t)
+		return ;
+	i = 0;
+	while (i < data->t_y)
+	{
+		str = data->t[i];
+		ft_strdel(&str);
+		i++;
+	}
+	ft_memdel((void **)&data->t);
 }

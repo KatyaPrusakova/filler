@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 19:36:49 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 21:39:40 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include "../libft/libft.h"
 
+# define VALID	"XxOo"
 # define X		"Xx"
 # define O		"Oo"
 # define M_INT	 2147483647
@@ -73,8 +74,9 @@ int          		numbers_to_map(int i, int j, t_fil *data);
 int          		create_map(int j, int i, t_fil *data);
 void		 		make_map(int x, int y, t_fil *data);
 void				make_map2(int c, int x, int y, t_fil *data);
-
+int		 enemy(int x, int y, t_fil *data);
 
 void		free_map(t_fil *data);
+void		free_piece(t_fil *data);
 
 #endif
