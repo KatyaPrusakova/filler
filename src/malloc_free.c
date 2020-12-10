@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 16:01:23 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/10 18:30:50 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void        malloc_token(int fd, char *line, t_fil *data)
 	int		tmp;
 
     i = 0;
+    
     while (*line != ' ')
         line++;
     line++;
@@ -58,7 +59,6 @@ void        malloc_token(int fd, char *line, t_fil *data)
         ft_strdel(&line);
     }
 }
-
 
 void        malloc_map(char *line, t_fil *data)
 {

@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 14:42:04 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:37:50 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,10 @@ void        		malloc_map(char *line, t_fil *data);
 */
 
 int         		is_valid(int i, int j, t_fil *data);
+int          		numbers_to_map(int i, int j, t_fil *data);
+int          		create_map(int j, int i, t_fil *data);
+void		 		make_map(int x, int y, t_fil *data);
+void				make_map2(int c, int x, int y, t_fil *data);
+
+
 #endif

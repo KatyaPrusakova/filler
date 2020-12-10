@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filler.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 16:13:52 by sadawi           ###   ########.fr       */
+/*   Updated: 2020/12/10 18:38:15 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,6 @@
 #define DEBUG_MAP "test.txt"
 
 int g_fd;
-
-void		make_map2(int c, int x, int y, t_fil *data)
-{
-	if ((x - 1 >= 0 && y - 1 >= 0 && data->map[y - 1][x - 1] == c) ||
-        (y - 1 >= 0 && data->map[y - 1][x] == c) ||
-        (x + 1 < data->x && y - 1 >= 0 && data->map[y - 1][x + 1] == c) ||
-        (x - 1 >= 0 && data->map[y][x - 1] == c) ||
-        (x + 1 < data->x && data->map[y][x + 1] == c) ||
-        (x - 1 >= 0 && y + 1 < data->y && data->map[y + 1][x - 1] == c) ||
-        (y + 1 < data->y && data->map[y + 1][x] == c) ||
-        (x + 1 < data->x && y + 1 < data->y && data->map[y + 1][x + 1] == c))
-            data->map[y][x] = c +  1;
-}
-
-int          numbers_to_map(int i, int j, t_fil *data)
-{
-    int c;
-
-    c = 1;
-    while (c < (data->y + data->x))
-	{
-		j = 0;
-        while (j < data->y)
-        {
-            i = 0;
-            while (i < data->x)
-            {
-                if (data->map[j][i] == '.')  
-                    make_map2(c + '0', i, j, data);
-                i++;
-            }
-            j++;
-        }
-       c++;
-   }
-   // print_map(0, data);
-    return (1);
-}
 
 int          fill_it(int i, int j, char r, t_fil *data)
 {
@@ -95,19 +57,6 @@ void         find_best(int i, int j, t_fil *data)
         }
         j++;
     }
-}
-
-void		 make_map(int x, int y, t_fil *data)
-{
-	if ((x - 1 >= 0 && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x - 1])) ||
-			(y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x])) ||
-			(x + 1 < data->x && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x + 1])) ||
-			(x - 1 >= 0 && ft_strchr(data->e, data->map[y][x - 1])) ||
-			(x + 1 < data->x && ft_strchr(data->e, data->map[y][x + 1])) ||
-			(x - 1 >= 0 && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x - 1])) ||
-			(y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x])) ||
-			(x + 1 < data->x && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x + 1])))
-		data->map[y][x] = 1 + '0';
 }
 
 int          ft_can_fit(int i, int j, t_fil *data)
@@ -188,49 +137,6 @@ int          find_answer(int j, int i, t_fil *data)
     return (0);
 }
 
-int          find_on_map_player(int j, int i, t_fil *data)
-{
-    // int c;
-
-    // c = 1;
-    // while (c < (data->y + data->x))
-	// {
-	// 	j = 0;
-        while (j < data->y)
-        {
-            i = 0;
-            while (i < data->x)
-            {
-                if (data->map[j][i] == '.')  
-                    make_map(i, j, data);
-                i++;
-            }
-            j++;
-        }
-   //     c++;
-  //  }
-  write(g_fd, "bbbb\n", 5);
-   // print_map(0, data);
-    numbers_to_map(0, 0, data);
-    return (1);
-    // while (j < data->y)
-    // {
-    //     i = 0;
-    //     while (i < data->x)
-    //     {
-    //         if (ft_strchr(data->e, data->map[j][i]))
-    //         {
-    //             data->e_x = i;
-    //             data->e_y = j;               
-    //             full_fill_it(data->e_x, data->e_y, data->i + '0', data);
-    //         }
-    //         i++;
-    //     }
-    //     j++;
-    // }
-    // return (1);
-}
-
 void         find_player(char *line, t_fil *data)
 {
     if (ft_strstr(line, "$$$ exec ") )
@@ -251,8 +157,6 @@ void         find_player(char *line, t_fil *data)
 
 // printf("%d|| data->player ||\n", data->player);
 
-#include <stdio.h>
-
 void	     play_game(int fd , char *line, t_fil *data)
 {
     while (1)
@@ -270,7 +174,7 @@ void	     play_game(int fd , char *line, t_fil *data)
         {
             malloc_token(fd, line, data);
             data->i = 0;
-            find_on_map_player(0, 0, data);
+            create_map(0, 0, data);
             find_answer(0, 0, data);
             //ft_putnbr(data->min_y);
            // ft_putchar(' ');
