@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 18:38:15 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:42:50 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,15 @@ int          ft_can_fit(int i, int j, t_fil *data)
        
     if (a == 1)
     {
+		j = 0;
+		while (j < data->y)
+		{
+			dprintf(g_fd, "|%s|\n", data->map[j]);
+			j++;
+		}
      //   printf("answer a |%d| %d %d %d %d \n", a, final_j, final_i, data->answer_y, data->answer_x);
         find_best(data->answer_x, data->answer_y, data);
+		dprintf(g_fd, "best is %d %d\n", final_j, final_i);
         data->min_x = final_i;
         data->min_y = final_j;
         return (1);
@@ -114,22 +121,25 @@ int          ft_can_fit(int i, int j, t_fil *data)
 
 int          find_answer(int j, int i, t_fil *data)
 {
+	int res;
+	int tmp;
 
+	res = 0;
+	tmp = res;
  //   printf("find player %s\n", data->p);
     while (j < data->y)
     {
         i = 0;
         while (i < data->x)
         {
-            if (ft_can_fit(i, j, data))
+            res = ft_can_fit(i, j, data);
+            if (res)
             {
                 data->answer_x = i;
                 data->answer_y = j;
+				dprintf(g_fd, "find_answer %d %d\n", data->answer_y, data->answer_x);
             }
-            else
-            {
-                data->end = 1;
-            }
+            
             i++;
         }
         j++;
@@ -152,7 +162,7 @@ void         find_player(char *line, t_fil *data)
             data->p = "xX";
         }
      }
-     free(line);
+    // free(line);
 }
 
 // printf("%d|| data->player ||\n", data->player);
@@ -167,14 +177,12 @@ void	     play_game(int fd , char *line, t_fil *data)
 			break;
      //   printf("%d|| %s ||\n", argc, line);
         if (ft_strstr(line, "Plateau ") )
-            malloc_map(line, data);
-        if (ft_isdigit(line[0]) && !data->end)
-            data->map[data->i++] = ft_strsub(line, 4, data->x);
+            malloc_map(fd, line, data);
         if (ft_strstr(line, "Piece "))
         {
             malloc_token(fd, line, data);
             data->i = 0;
-            create_map(0, 0, data);
+            
             find_answer(0, 0, data);
             //ft_putnbr(data->min_y);
            // ft_putchar(' ');
@@ -183,11 +191,12 @@ void	     play_game(int fd , char *line, t_fil *data)
 			dprintf(1, "%d %d\n", data->min_y, data->min_x);
 			dprintf(g_fd, "%d %d\n", data->min_y, data->min_x);
 			write(g_fd, "dddd\n", 5);
+			free_map(data);
         }
 		ft_strdel(&line);
 	}
 	write(g_fd, "cccc\n", 5);
-    free(line);
+ //   free(line);
 //    printf("WOW! %d %d \n", data.min_y, data.min_x);
     
 }
@@ -200,7 +209,6 @@ int          main(void)
     char    *line;
 
 	g_fd = open(DEBUG_MAP, O_WRONLY|O_TRUNC);
-	write(g_fd, "aaaa\n", 5);
     int     fd = 0;
     line = NULL;
     ft_bzero(&data, sizeof(t_fil));

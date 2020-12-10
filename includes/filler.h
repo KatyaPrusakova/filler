@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 18:37:50 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 19:36:49 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int        			full_put_token(t_fil *data);
 int					puterror(int i);
 int         		get_token(char *line, t_fil *data);
 void        		malloc_token(int fd, char *line, t_fil *data);
-void        		malloc_map(char *line, t_fil *data);
+void        		malloc_map(int fd, char *line, t_fil *data);
 
 /*
 ** ------ TOOLS.C ------
@@ -74,5 +74,7 @@ int          		create_map(int j, int i, t_fil *data);
 void		 		make_map(int x, int y, t_fil *data);
 void				make_map2(int c, int x, int y, t_fil *data);
 
+
+void		free_map(t_fil *data);
 
 #endif
