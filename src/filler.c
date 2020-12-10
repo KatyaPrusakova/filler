@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   filler.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sadawi <sadawi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 14:42:32 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:13:52 by sadawi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+#define DEBUG_MAP "test.txt"
+
+int g_fd;
 
 void		make_map2(int c, int x, int y, t_fil *data)
 {
@@ -205,7 +209,8 @@ int          find_on_map_player(int j, int i, t_fil *data)
         }
    //     c++;
   //  }
-  //  print_map(0, data);
+  write(g_fd, "bbbb\n", 5);
+   // print_map(0, data);
     numbers_to_map(0, 0, data);
     return (1);
     // while (j < data->y)
@@ -246,10 +251,16 @@ void         find_player(char *line, t_fil *data)
 
 // printf("%d|| data->player ||\n", data->player);
 
+#include <stdio.h>
+
 void	     play_game(int fd , char *line, t_fil *data)
 {
-    while (get_next_line(fd, &line) > -1 && !data->end)
+    while (1)
 	{
+		get_next_line(fd, &line);
+		//write(g_fd, "eeee\n", 5);
+		if (!line)
+			break;
      //   printf("%d|| %s ||\n", argc, line);
         if (ft_strstr(line, "Plateau ") )
             malloc_map(line, data);
@@ -261,13 +272,17 @@ void	     play_game(int fd , char *line, t_fil *data)
             data->i = 0;
             find_on_map_player(0, 0, data);
             find_answer(0, 0, data);
-            ft_putnbr(data->min_y);
-            ft_putchar(' ');
-            ft_putnbr(data->min_x);
-            ft_putchar('\n');
+            //ft_putnbr(data->min_y);
+           // ft_putchar(' ');
+           // ft_putnbr(data->min_x);
+            //ft_putchar('\n');
+			dprintf(1, "%d %d\n", data->min_y, data->min_x);
+			dprintf(g_fd, "%d %d\n", data->min_y, data->min_x);
+			write(g_fd, "dddd\n", 5);
         }
 		ft_strdel(&line);
 	}
+	write(g_fd, "cccc\n", 5);
     free(line);
 //    printf("WOW! %d %d \n", data.min_y, data.min_x);
     
@@ -280,11 +295,13 @@ int          main(void)
     t_fil   data;
     char    *line;
 
+	g_fd = open(DEBUG_MAP, O_WRONLY|O_TRUNC);
+	write(g_fd, "aaaa\n", 5);
     int     fd = 0;
     line = NULL;
     ft_bzero(&data, sizeof(t_fil));
   
-    fd = open("testi", O_RDONLY);
+   // fd = open("testi", O_RDONLY);
 	while (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
 	{
 		ft_strdel(&line);
