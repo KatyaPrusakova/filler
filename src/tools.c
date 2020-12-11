@@ -6,20 +6,13 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:52:16 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 10:49:14 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 15:16:14 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
 extern int g_fd;
-
-int         is_valid(int i, int j, t_fil *data)
-{
-    if (i >= 0 && j >= 0 && i <= data->x && j <= data->y &&!ft_strchr(O, data->map[j][i]) && !ft_strchr(X, data->map[j][i]))
-        return (1);
-    return (0);
-}
-
 
 int          create_map(int j, int i, t_fil *data)
 {

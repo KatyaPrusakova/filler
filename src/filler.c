@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 15:05:55 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 15:18:00 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_fil		*place(t_fil *data)
 	return (data);
 }
 
-void          print_res(t_fil *data)
+void         print_res(t_fil *data)
 {
     ft_putnbr(data->min_y);
     ft_putchar(' ');
