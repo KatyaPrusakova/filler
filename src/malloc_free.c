@@ -6,24 +6,11 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 16:18:16 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 21:35:54 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-int			puterror(int i)
-{
-	if (i == 0)
-		exit (0);
-	return (0);
-}
-
-/*
-** Parsing the token
-*/
-
-extern int g_fd;
 
 void		malloc_token(int fd, char *line, t_fil *data)
 {
@@ -40,8 +27,7 @@ void		malloc_token(int fd, char *line, t_fil *data)
 	j = 0;
 	while (i++ < data->t_y)
 	{
-		get_next_line(fd, &line);		
-		dprintf(g_fd, "%s\n", line);
+		get_next_line(fd, &line);
 		ft_strcpy(data->t[j], line);
 		j++;
 		ft_strdel(&line);
@@ -104,10 +90,6 @@ void		free_map(t_fil *data)
 	}
 	ft_memdel((void **)&data->map);
 }
-
-/*
-** Free one token
-*/
 
 void		free_piece(t_fil *data)
 {

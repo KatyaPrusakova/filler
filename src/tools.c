@@ -6,13 +6,24 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:52:16 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 16:15:50 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 21:37:22 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-extern int g_fd;
+/*
+** Filling the map value to make heat map, in
+** order to know the distance between the player and enemy
+** i - 1  |  i - 1  |  i - 1
+** j - 1  |         |  j + 1
+** -------------------------
+**        |    i    |       
+** j - 1  |    j    |  j + 1
+** -------------------------
+** i + 1  |         |  i + 1
+** j - 1  |  i + 1  |  j + 1
+*/
 
 int			create_map(int j, int i, t_fil *data)
 {
@@ -22,7 +33,7 @@ int			create_map(int j, int i, t_fil *data)
 		while (i < data->x)
 		{
 			if (data->map[j][i] == 0)
-				make_map(i, j, data);
+				add_num(i, j, data);
 			i++;
 		}
 		j++;
@@ -45,7 +56,7 @@ int			numbers_to_map(int i, int j, t_fil *data)
 			while (i < data->x)
 			{
 				if (data->map[j][i] == 0)
-					make_map2(c, i, j, data);
+					add_num_all_map(c, i, j, data);
 				i++;
 			}
 			j++;
@@ -55,7 +66,7 @@ int			numbers_to_map(int i, int j, t_fil *data)
 	return (1);
 }
 
-void		make_map(int x, int y, t_fil *data)
+void		add_num(int x, int y, t_fil *data)
 {
 	if ((x - 1 >= 0 && y - 1 >= 0 && data->map[y - 1][x - 1] == -2) ||
 		(y - 1 >= 0 && data->map[y - 1][x] == -2) ||
@@ -69,7 +80,7 @@ void		make_map(int x, int y, t_fil *data)
 		data->map[y][x] = 1;
 }
 
-void		make_map2(int c, int x, int y, t_fil *data)
+void		add_num_all_map(int c, int x, int y, t_fil *data)
 {
 	if ((x - 1 >= 0 && y - 1 >= 0 && data->map[y - 1][x - 1] == c) ||
 		(y - 1 >= 0 && data->map[y - 1][x] == c) ||
