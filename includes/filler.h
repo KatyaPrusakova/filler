@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 15:21:23 by eprusako         ###   ########.fr       */
-/*                                                                            */
+/**/
+/*:::  ::::::::   */
+/*   filler.h   :+:  :+::+:   */
+/*+:+ +:+ +:+ */
+/*   By: eprusako <eprusako@student.hive.fi>+#+  +:+   +#+*/
+/*+#+#+#+#+#+   +#+   */
+/*   Created: 2020/11/30 21:39:09 by eprusako  #+##+# */
+/*   Updated: 2020/12/11 15:31:39 by eprusako ###   ########.fr   */
+/**/
 /* ************************************************************************** */
 
 #ifndef FILLER_H
@@ -53,7 +53,7 @@ typedef	struct		s_fil
 ** ------ FILLER.C ------
 */
 
-void        		solve_it(int i, int j, char fill, t_fil *data);
+void		solve_it(int i, int j, char fill, t_fil *data);
 
 /*
 ** ------ MALLOC_FREE.C ------
@@ -61,16 +61,17 @@ void        		solve_it(int i, int j, char fill, t_fil *data);
 
 void				copy_map(char *line, int y, t_fil *data);
 int					puterror(int i);
-int         		get_token(char *line, t_fil *data);
-void        		malloc_token(int fd, char *line, t_fil *data);
-void        		malloc_map(int fd, char *line, t_fil *data);
-void        		get_coord(int *x, int *y, char *line);
+int 		          get_token(char *line, t_fil *data);
+void		          malloc_token(int fd, char *line, t_fil *data);
+void		          malloc_map(int fd, char *line, t_fil *data);
+void		          get_coord(int *x, int *y, char *line); 
+
 /*
 ** ------ TOOLS.C ------
 */
 
-int          		numbers_to_map(int i, int j, t_fil *data);
-int          		create_map(int j, int i, t_fil *data);
+int  		         numbers_to_map(int i, int j, t_fil *data);
+int  		         create_map(int j, int i, t_fil *data);
 void		 		make_map(int x, int y, t_fil *data);
 void				make_map2(int c, int x, int y, t_fil *data);
 
