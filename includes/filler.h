@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 21:39:09 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 22:50:42 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 10:36:01 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  
 typedef	struct		s_fil
 {
-	char			**map;
+	int				**map;
 	char			**t;
 	int				t_x;
 	int				t_y;
@@ -47,6 +47,9 @@ typedef	struct		s_fil
 	int				next_step;
 }					t_fil;
 
+
+void		copy_map(char *line, int y, t_fil *data);
+
 /*
 ** ------ FILLER.C ------
 */
@@ -64,7 +67,7 @@ int					puterror(int i);
 int         		get_token(char *line, t_fil *data);
 void        		malloc_token(int fd, char *line, t_fil *data);
 void        		malloc_map(int fd, char *line, t_fil *data);
-
+void        get_coord(int *x, int *y, char *line);
 /*
 ** ------ TOOLS.C ------
 */

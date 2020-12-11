@@ -6,11 +6,12 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:52:16 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 09:55:25 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 10:49:14 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+extern int g_fd;
 
 int         is_valid(int i, int j, t_fil *data)
 {
@@ -27,7 +28,7 @@ int          create_map(int j, int i, t_fil *data)
         i = 0;
         while (i < data->x)
         {
-            if (data->map[j][i] == '.')  
+            if (data->map[j][i] == 0)  
                 make_map(i, j, data);
             i++;
         }
@@ -51,29 +52,28 @@ int          numbers_to_map(int i, int j, t_fil *data)
             i = 0;
             while (i < data->x)
             {
-                if (data->map[j][i] == '.')  
-                    make_map2(c + '0', i, j, data);
+                if (data->map[j][i] == 0)  
+                    make_map2(c, i, j, data);
                 i++;
             }
             j++;
         }
        c++;
    }
-   // print_map(0, data);
     return (1);
 }
 
 void		 make_map(int x, int y, t_fil *data)
 {
-	if ((x - 1 >= 0 && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x - 1])) ||
-			(y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x])) ||
-			(x + 1 < data->x && y - 1 >= 0 && ft_strchr(data->e, data->map[y - 1][x + 1])) ||
-			(x - 1 >= 0 && ft_strchr(data->e, data->map[y][x - 1])) ||
-			(x + 1 < data->x && ft_strchr(data->e, data->map[y][x + 1])) ||
-			(x - 1 >= 0 && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x - 1])) ||
-			(y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x])) ||
-			(x + 1 < data->x && y + 1 < data->y && ft_strchr(data->e, data->map[y + 1][x + 1])))
-		data->map[y][x] = 1 + '0';
+	if ((x - 1 >= 0 && y - 1 >= 0 && data->map[y - 1][x - 1] == -2) ||
+			(y - 1 >= 0 && data->map[y - 1][x] == -2) ||
+			(x + 1 < data->x && y - 1 >= 0 && data->map[y - 1][x + 1] == -2) ||
+			(x - 1 >= 0 && data->map[y][x - 1] == -2) ||
+			(x + 1 < data->x && data->map[y][x + 1] == -2) ||
+			(x - 1 >= 0 && y + 1 < data->y && data->map[y + 1][x - 1] == -2) ||
+			(y + 1 < data->y && data->map[y + 1][x] == -2) ||
+			(x + 1 < data->x && y + 1 < data->y && data->map[y + 1][x + 1] == -2))
+		data->map[y][x] = 1;
 }
 
 void		 make_map2(int c, int x, int y, t_fil *data)

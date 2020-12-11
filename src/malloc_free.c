@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/10 21:19:26 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 15:08:36 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,12 @@ void        malloc_token(int fd, char *line, t_fil *data)
 
     i = 0;
     
-    while (*line != ' ')
-        line++;
-    line++;
-    data->t_y = ft_atoi(line);
-    while (ft_isdigit(*line))
-        line++;
-    data->t_x = ft_atoi(line);
+    get_coord(&data->t_x, &data->t_y, line);
     if (!(data->t = (char**)ft_memalloc(sizeof(char*) * data->t_y + 1)))
         puterror(0);
     while (i < data->t_y)
         data->t[i++] = (char*)ft_memalloc(sizeof(char) * data->t_x + 1);
     i = 0;
-//	dprintf(g_fd, "%d\n", data->t_y);
 
     int j = 0;
     while (i++ < data->t_y)
@@ -58,33 +51,54 @@ void        malloc_token(int fd, char *line, t_fil *data)
     j = 0;
 }
 
+void        get_coord(int *x, int *y, char *line)
+{
+    while (*line != ' ')
+        line++;
+    line++;
+    *y = ft_atoi(line);
+    while (ft_isdigit(*line))
+        line++;
+    *x = ft_atoi(line);
+}
+
 void        malloc_map(int fd, char *line, t_fil *data)
 {
     int     i;
 
     i = 0;
-    while (*line != ' ')
-        line++;
-    line++;
-    data->y = ft_atoi(line);
-    while (ft_isdigit(*line))
-        line++;
-    data->x = ft_atoi(line);
-    if (!(data->map = (char**)ft_memalloc(sizeof(char*) * data->y + 1)))
+    get_coord(&data->x, &data->y, line);
+    if (!(data->map = (int**)ft_memalloc(sizeof(int*) * data->y)))
         puterror(0);
     while (i < data->y)
-        data->map[i++] = (char*)ft_memalloc(sizeof(char) * data->x + 1);
+        data->map[i++] = (int*)ft_memalloc(sizeof(int) * data->x);
     i = 0;
     get_next_line(fd, &line);
     ft_strdel(&line);
     while (i < data->y)
     {
         get_next_line(fd, &line);
-        data->map[i] = ft_strsub(line, 4, data->x);
+        copy_map(ft_strsub(line, 4, data->x), i, data);
         i++;
       //  ft_strdel(&line);
     }
-   
+}
+
+void		copy_map(char *line, int y, t_fil *data)
+{
+	int		x;
+
+	x = 0;
+	while (x < data->x)
+	{
+		if (line[x] == '.')
+			data->map[y][x] = 0;
+		else if (ft_strchr(data->e, line[x]))
+			data->map[y][x] = -2;
+		else if (ft_strchr(data->p, line[x]))
+			data->map[y][x] = -1;
+		x++;
+	}
 }
 
 void		free_map(t_fil *data)
