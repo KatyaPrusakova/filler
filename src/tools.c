@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:52:16 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 16:04:02 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 16:15:50 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			create_map(int j, int i, t_fil *data)
 		i = 0;
 		while (i < data->x)
 		{
-			if (data->map[j][i] == 0)  
+			if (data->map[j][i] == 0)
 				make_map(i, j, data);
 			i++;
 		}
@@ -32,7 +32,6 @@ int			create_map(int j, int i, t_fil *data)
 }
 
 int			numbers_to_map(int i, int j, t_fil *data)
-
 {
 	int		c;
 
@@ -45,7 +44,7 @@ int			numbers_to_map(int i, int j, t_fil *data)
 			i = 0;
 			while (i < data->x)
 			{
-				if (data->map[j][i] == 0)  
+				if (data->map[j][i] == 0)
 					make_map2(c, i, j, data);
 				i++;
 			}
@@ -59,13 +58,14 @@ int			numbers_to_map(int i, int j, t_fil *data)
 void		make_map(int x, int y, t_fil *data)
 {
 	if ((x - 1 >= 0 && y - 1 >= 0 && data->map[y - 1][x - 1] == -2) ||
-			(y - 1 >= 0 && data->map[y - 1][x] == -2) ||
-			(x + 1 < data->x && y - 1 >= 0 && data->map[y - 1][x + 1] == -2) ||
-			(x - 1 >= 0 && data->map[y][x - 1] == -2) ||
-			(x + 1 < data->x && data->map[y][x + 1] == -2) ||
-			(x - 1 >= 0 && y + 1 < data->y && data->map[y + 1][x - 1] == -2) ||
-			(y + 1 < data->y && data->map[y + 1][x] == -2) ||
-			(x + 1 < data->x && y + 1 < data->y && data->map[y + 1][x + 1] == -2))
+		(y - 1 >= 0 && data->map[y - 1][x] == -2) ||
+		(x + 1 < data->x && y - 1 >= 0 && data->map[y - 1][x + 1] == -2) ||
+		(x - 1 >= 0 && data->map[y][x - 1] == -2) ||
+		(x + 1 < data->x && data->map[y][x + 1] == -2) ||
+		(x - 1 >= 0 && y + 1 < data->y && data->map[y + 1][x - 1] == -2) ||
+		(y + 1 < data->y && data->map[y + 1][x] == -2) ||
+		(x + 1 < data->x && y + 1 < data->y && \
+		data->map[y + 1][x + 1] == -2))
 		data->map[y][x] = 1;
 }
 
@@ -79,5 +79,16 @@ void		make_map2(int c, int x, int y, t_fil *data)
 		(x - 1 >= 0 && y + 1 < data->y && data->map[y + 1][x - 1] == c) ||
 		(y + 1 < data->y && data->map[y + 1][x] == c) ||
 		(x + 1 < data->x && y + 1 < data->y && data->map[y + 1][x + 1] == c))
-			data->map[y][x] = c +  1;
+		data->map[y][x] = c + 1;
+}
+
+void		get_coord(int *x, int *y, char *line)
+{
+	while (*line != ' ')
+		line++;
+	line++;
+	*y = ft_atoi(line);
+	while (ft_isdigit(*line))
+		line++;
+	*x = ft_atoi(line);
 }

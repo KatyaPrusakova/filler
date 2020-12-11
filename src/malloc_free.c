@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 16:02:35 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/11 16:18:16 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ extern int g_fd;
 void		malloc_token(int fd, char *line, t_fil *data)
 {
 	int		i;
+	int		j;
 
 	i = 0;
-	
 	get_coord(&data->t_x, &data->t_y, line);
 	if (!(data->t = (char**)ft_memalloc(sizeof(char*) * data->t_y + 1)))
 		puterror(0);
 	while (i < data->t_y)
 		data->t[i++] = (char*)ft_memalloc(sizeof(char) * data->t_x + 1);
 	i = 0;
-
-	int j = 0;
+	j = 0;
 	while (i++ < data->t_y)
 	{
 		get_next_line(fd, &line);		
@@ -48,18 +47,6 @@ void		malloc_token(int fd, char *line, t_fil *data)
 		ft_strdel(&line);
 	}
 	create_map(0, 0, data);
-	j = 0;
-}
-
-void		get_coord(int *x, int *y, char *line)
-{
-	while (*line != ' ')
-		line++;
-	line++;
-	*y = ft_atoi(line);
-	while (ft_isdigit(*line))
-		line++;
-	*x = ft_atoi(line);
 }
 
 void		malloc_map(int fd, char *line, t_fil *data)
