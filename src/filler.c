@@ -6,27 +6,33 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 19:39:26 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/13 23:42:50 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
+#define DEBUG_MAP "test.txt"
+int			g_fd;
+
 void			find_player(char *line, t_fil *data)
 {
-	if (ft_strstr(line, "$$$ exec "))
+	if (ft_strstr(line, "$$$ exec p1"))
 	{
 		if (ft_strstr(line, "eprusako"))
 		{
 			data->p = "oO";
 			data->e = "xX";
 		}
-		else
+	}
+	if (ft_strstr(line, "$$$ exec p2"))
+	{
 		{
 			data->e = "oO";
 			data->p = "xX";
 		}
 	}
+	free(line);
 }
 
 int				main(void)
@@ -37,8 +43,9 @@ int				main(void)
 
 	fd = 0;
 	line = NULL;
+	g_fd = open(DEBUG_MAP, O_WRONLY|O_TRUNC);
 	ft_bzero(&data, sizeof(t_fil));
-	while (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
+	if (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
 		ft_strdel(&line);
 	find_player(line, &data);
 	play_game(fd, line, &data);
