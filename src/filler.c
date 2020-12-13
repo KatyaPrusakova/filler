@@ -6,14 +6,11 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/13 23:42:50 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:16:38 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-#define DEBUG_MAP "test.txt"
-int			g_fd;
 
 void			find_player(char *line, t_fil *data)
 {
@@ -43,7 +40,6 @@ int				main(void)
 
 	fd = 0;
 	line = NULL;
-	g_fd = open(DEBUG_MAP, O_WRONLY|O_TRUNC);
 	ft_bzero(&data, sizeof(t_fil));
 	if (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
 		ft_strdel(&line);

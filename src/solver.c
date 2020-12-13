@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 19:32:51 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/13 23:52:26 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:06:29 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ t_fil			*place(t_fil *data)
 ** there is "Piece" on stdin it starts to read the token and find solution.
 */
 
-extern int g_fd;
-
 void			play_game(int fd, char *line, t_fil *data)
 {
 	while (1)
@@ -131,7 +129,6 @@ void			play_game(int fd, char *line, t_fil *data)
 		{
 			malloc_token(fd, line, data);
 			print_res(place(data));
-			dprintf(g_fd, "|%d %d|\n", data->min_y, data->min_x);
 			data->min_y = 0;
 			data->min_x = 0;
 			free_piece(data);

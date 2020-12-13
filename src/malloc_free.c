@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/14 00:03:10 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/14 00:05:15 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,11 @@ void		malloc_map(int fd, char *line, t_fil *data)
 	}
 }
 
-extern int g_fd;
-
 void		copy_map(char *line, int y, t_fil *data)
 {
 	int		x;
 
 	x = 0;
-	dprintf(g_fd, "|%s|\n", line);
 	while (line[x] != '\0')
 	{
 		if (line[x] == '.')
