@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/11 19:39:26 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/17 23:18:38 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				main(void)
 	fd = 0;
 	line = NULL;
 	ft_bzero(&data, sizeof(t_fil));
-	while (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
+	if (get_next_line(fd, &line) && !ft_strstr(line, "$$$ exec "))
 		ft_strdel(&line);
 	find_player(line, &data);
 	play_game(fd, line, &data);
@@ -57,4 +57,28 @@ int				puterror(int i)
 	if (i == 0)
 		exit(0);
 	return (0);
+}
+
+void			get_token_max(t_fil *data)
+{
+	int			x;
+	int			y;
+	int			flag;
+
+
+	x = 0;
+	y = 0;
+	flag = 0;
+	while (y < data->t_y)
+	{
+		while (x < data->t_x)
+		{
+			if (data->t[y][x] == '*')
+				flag = 1;
+			if (x == data->t_x && flag)
+				ft_strdel(data->t[y]);
+			x++;
+		}
+		y++;
+	}
 }
