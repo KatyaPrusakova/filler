@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/17 23:18:38 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/17 23:31:00 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 void			find_player(char *line, t_fil *data)
 {
-	if (ft_strstr(line, "$$$ exec "))
+	if (ft_strstr(line, "$$$ exec p1"))
 	{
 		if (ft_strstr(line, "eprusako"))
 		{
 			data->p = "oO";
 			data->e = "xX";
 		}
-		else
+	}
+	if (ft_strstr(line, "$$$ exec p2"))
+	{
 		{
 			data->e = "oO";
 			data->p = "xX";
 		}
 	}
+	free(line);
 }
 
 int				main(void)

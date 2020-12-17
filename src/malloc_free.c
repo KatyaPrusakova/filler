@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:48:01 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/12 00:00:47 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/17 23:31:05 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void		malloc_token(int fd, char *line, t_fil *data)
 void		malloc_map(int fd, char *line, t_fil *data)
 {
 	int		i;
+	char	*tmp;
 
 	i = 0;
 	get_coord(&data->x, &data->y, line);
@@ -51,9 +52,10 @@ void		malloc_map(int fd, char *line, t_fil *data)
 	while (i < data->y)
 	{
 		get_next_line(fd, &line);
-		copy_map(ft_strsub(line, 4, data->x), i, data);
+		tmp = ft_strsub(line, 4, data->x);
+		copy_map(tmp, i, data);
 		i++;
-		free(line);
+		ft_strdel(&line);
 	}
 }
 
@@ -62,7 +64,7 @@ void		copy_map(char *line, int y, t_fil *data)
 	int		x;
 
 	x = 0;
-	while (x < data->x)
+	while (line[x] != '\0')
 	{
 		if (line[x] == '.')
 			data->map[y][x] = 0;
@@ -72,6 +74,7 @@ void		copy_map(char *line, int y, t_fil *data)
 			data->map[y][x] = -1;
 		x++;
 	}
+	free(line);
 }
 
 void		free_map(t_fil *data)
