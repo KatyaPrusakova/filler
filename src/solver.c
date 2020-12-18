@@ -6,7 +6,7 @@
 /*   By: eprusako <eprusako@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 19:32:51 by eprusako          #+#    #+#             */
-/*   Updated: 2020/12/14 00:06:29 by eprusako         ###   ########.fr       */
+/*   Updated: 2020/12/18 23:06:57 by eprusako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_fil			*place(t_fil *data)
 
 	j = 0;
 	min = M_INT;
+	check_corners(data);
 	while (data->t_y + j <= data->y)
 	{
 		i = 0;
@@ -108,6 +109,67 @@ t_fil			*place(t_fil *data)
 	}
 	free_piece(data);
 	return (data);
+}
+
+#define DEBUG_MAP "test.txt"
+int	g_fd;
+
+void			check_corners(t_fil *data)
+{
+	int			x;
+	int			y;
+	int			flag;
+
+	x = 0;
+	y = 0;
+	flag = 0;
+	g_fd = open(DEBUG_MAP, O_WRONLY|O_TRUNC);
+	
+	while (y < data->t_y)
+	{
+		while (x < data->t_x)
+		{
+			if (check_y(x, y, 0, data) && y == 0)
+				dprintf(1, "%d %d\n", data->min_y, data->min_x);
+			if (check_x(x, y, 0, data) && x == 0)
+				dprintf(1, "%d %d\n", data->min_y, data->min_x);
+			x++;
+		}
+		y++;
+	}
+}
+
+int			check_y(int x, int y, int flag, t_fil *data)
+{
+	int		i;
+	int		j;
+
+	i = data->t_x;
+	j = data->t_y;
+	while (x-- > 0)
+	{
+		if (data->t[j + y][i + x] == '*' && data->map[y][x])
+			flag++;
+	}
+	// if (flag == 1 and no other '*')
+	// {
+	// 	data->min_x = i;
+	// 	data->min_y = j;
+	// }
+}
+
+int			check_x(int x, int y, int flag, t_fil *data)
+{
+	int		i;
+	int		j;
+
+	i = data->t_x;
+	j = data->t_y;
+	while (y-- > 0)
+	{
+		if (data->t[j + y][i + x] == '*' && data->map[y][x])
+			flag++;
+	}
 }
 
 /*
